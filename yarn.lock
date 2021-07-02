@@ -6242,6 +6242,11 @@ istanbul-reports@^3.0.2:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
 
+jalaali-js@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/jalaali-js/-/jalaali-js-1.1.5.tgz#a2cd4627c3c61588a81877df1d3098869213e985"
+  integrity sha512-eS+zDRtz2JcGnVPWeng53rzlKU8tX2RWbJ1cqu1+eZHPEh1QL5ydB+pXD4RCf/zE3eKDN2bLQEjY0u/WIewMVQ==
+
 jest-changed-files@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-26.6.2.tgz#f6198479e1cc66f22f9ae1e22acaa0b429c042d0"
@@ -9046,6 +9051,13 @@ react-bootstrap@^1.6.1:
     react-transition-group "^4.4.1"
     uncontrollable "^7.2.1"
     warning "^4.0.3"
+
+react-calendar-datetime-picker@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/react-calendar-datetime-picker/-/react-calendar-datetime-picker-1.5.1.tgz#dcd64f7ecc686e454ee0016672f9edd6da661b18"
+  integrity sha512-E1bYR77Rtn3FPth8bnslT1nM28PZ0pFch7Wx1ryzwaRCH0yAAo+rAbH1w+C/WlGItc+uBGg7usnxiJj8P7cwIw==
+  dependencies:
+    jalaali-js "^1.1.5"
 
 react-dev-utils@^11.0.3:
   version "11.0.4"
