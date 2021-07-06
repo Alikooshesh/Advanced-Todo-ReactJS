@@ -9,33 +9,20 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
     const [listSort , setListSort] = useState<IlistSort>({priority : 0 , status : 0 , deadLine : 0})
 
     function sortChangeButton(sort : string){
-        if (sort == "priority"){
-            const prioritySort = listSort.priority
-            if (prioritySort <2){
-                setListSort({priority : listSort.priority +1 , status : 0 , deadLine : 0})
-            }else {
-                setListSort({priority : 0 , status : 0 , deadLine : 0})
-            }
-        }
-        else if(sort == "status"){
-            const statusSort = listSort.status
-            if (statusSort <2){
-                setListSort({priority : 0 , status : listSort.status + 1 , deadLine : 0})
-            }else {
-                setListSort({priority : 0 , status : 0 , deadLine : 0})
-            }
-        }
-        else if(sort == "deadLine"){
-            const deadLineSort = listSort.deadLine
-            if (deadLineSort <2){
-                setListSort({priority : 0 , status : 0 , deadLine : listSort.deadLine + 1})
-            }else {
-                setListSort({priority : 0 , status : 0 , deadLine : 0})
-            }
-        }
-        else {
-            console.error("Wrong input for sortChange")
-        }
+        sort == "priority" &&
+            (listSort.priority < 2 ?
+                setListSort({priority : listSort.priority +1 , status : 0 , deadLine : 0}) :
+                    setListSort({priority : 0 , status : 0 , deadLine : 0}))
+
+        sort == "status" &&
+            (listSort.status < 2 ?
+                setListSort({priority : 0 , status : listSort.status + 1 , deadLine : 0}) :
+                    setListSort({priority : 0 , status : 0 , deadLine : 0}))
+
+        sort == "deadLine" &&
+            (listSort.deadLine < 2 ?
+                setListSort({priority : 0 , status : 0 , deadLine : listSort.deadLine+1}) :
+                    setListSort({priority : 0 , status : 0 , deadLine : 0}))
 
     }
 
