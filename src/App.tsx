@@ -6,8 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Header from "./components/header/header";
 import {Button, Modal} from "react-bootstrap";
+import TodoTable from "./components/todoTable/TodoTable";
+import fakeTodos from "./data/fakeTodos";
+import {Itodo} from "./interfaces";
 
 function App() {
+    const [todoData , setTodoData] = useState<Itodo[]>(fakeTodos)
     const [modalShow, setModalShow] = useState(false);
 
   return (
@@ -16,6 +20,7 @@ function App() {
       <div className={"header"}>
         <Header setModalShow={setModalShow} modalShow={modalShow}></Header>
       </div>
+        <TodoTable todoData={todoData}></TodoTable>
 
     </div>
   );

@@ -1,0 +1,14 @@
+.deadLine-td , .status-td{
+    font-size: 80%;
+    border: 1px solid red;
+    border-radius: 2.5rem;
+}
+
+.status-td{
+    border-color: transparent;
+}
+
+.clickable:hover{
+    cursor: pointer;
+    color: black !important;
+}

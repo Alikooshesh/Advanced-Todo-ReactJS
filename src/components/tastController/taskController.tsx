@@ -1,6 +1,6 @@
 import './taskController.css'
 import React, {useState} from "react";
-import {Button, Modal} from "react-bootstrap";
+import {Button, Form, Modal} from "react-bootstrap";
 import DtPicker from 'react-calendar-datetime-picker'
 import 'react-calendar-datetime-picker/dist/index.css'
 
@@ -20,19 +20,20 @@ const TaskModal:React.FC<ItaskModal> = (props) => {
                 <div className={"modal-body-div d-flex flex-column justify-content-center align-items-center p-3"}>
                     <input type="text" placeholder={"Task Name"} className={"w-100 mb-5 p-1 rounded"}/>
                     <div className={"w-100 d-flex justify-content-between mt-3 mb-5"}>
-                        <input list={"priority"} placeholder={"priority"} className={"w-25 p-1 rounded"}/>
-                        <input list={"status"} placeholder={"status"} className={"w-25 p-1 rounded"}/>
-                        <datalist id={"priority"}>
-                            <option value={"High"}></option>
-                            <option value={"Medium"}></option>
-                            <option value={"Low"}></option>
-                        </datalist>
 
-                        <datalist id={"status"}>
-                            <option value={"ToDO"}></option>
-                            <option value={"Doing"}></option>
-                            <option value={"Done"}></option>
-                        </datalist>
+                        <Form.Control as="select" custom>
+                            <option disabled>priority</option>
+                            <option>High</option>
+                            <option>Medium</option>
+                            <option>Low</option>
+                        </Form.Control>
+
+                        <Form.Control as="select" custom>
+                            <option disabled>status</option>
+                            <option>ToDO</option>
+                            <option>Doing</option>
+                            <option>Done</option>
+                        </Form.Control>
 
                         <DtPicker
                             onChange={setDate}
