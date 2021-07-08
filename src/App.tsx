@@ -12,15 +12,15 @@ import {Itodo} from "./interfaces";
 
 function App() {
     const [todoData , setTodoData] = useState<Itodo[]>(fakeTodos)
-    const [modalShow, setModalShow] = useState(false);
+    const [addModalShow, setAddModalShow] = useState<boolean>(false)
+    const [searchText , setSearchText] = useState<string>("")
 
   return (
     <div className={"w-100 h-100 d-flex flex-column"}>
-        {console.log(modalShow)}
       <div className={"header"}>
-        <Header setModalShow={setModalShow} modalShow={modalShow}></Header>
+        <Header setModalShow={setAddModalShow} modalShow={addModalShow} searchText={searchText} setSearchText={setSearchText}></Header>
       </div>
-        <TodoTable todoData={todoData}></TodoTable>
+        <TodoTable todoData={todoData} searchText={searchText}></TodoTable>
 
     </div>
   );

@@ -1,6 +1,8 @@
 export interface Iheader{
     modalShow : boolean,
-    setModalShow : Function
+    setModalShow : Function,
+    setSearchText: Function,
+    searchText : string
 }
 
 export interface ItaskModal{
@@ -18,7 +20,8 @@ export interface Itodo{
 }
 
 export interface ItodoTable{
-    todoData : Itodo[]
+    todoData : Itodo[] ,
+    searchText : string
 }
 
 export interface IlistSort{

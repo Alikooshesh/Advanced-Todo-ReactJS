@@ -1,12 +1,20 @@
 import React, {useEffect, useState} from "react";
 import {MdKeyboardArrowLeft , MdKeyboardArrowUp , MdKeyboardArrowDown , MdVisibility , MdModeEdit , MdDelete} from "react-icons/md";
 import './todoTable.css'
-import {IlistSort, ItodoTable} from "../../interfaces";
+import {IlistSort, Itodo, ItodoTable} from "../../interfaces";
 import {Table} from "react-bootstrap";
 
 const TodoTable:React.FC<ItodoTable> = (props) => {
     const [todoData , setTodoData] = useState([...props.todoData])
     const [listSort , setListSort] = useState<IlistSort>({priority : 0 , status : 0 , deadLine : 0})
+
+    const searchItems:Itodo[] | null = props.todoData.filter(item => item.text.toLowerCase().includes(props.searchText.toLowerCase()))
+
+    useEffect(()=> {
+        // const searchItems:Itodo[] | null = props.todoData.filter(item => item.text.includes(props.searchText))
+        searchItems ? setTodoData([...searchItems]) : setTodoData([...todoData])
+        setListSort({priority : 0 , status : 0 , deadLine : 0})
+    },[props.searchText])
 
     function sortChangeButton(sort : string){
         sort == "priority" &&
@@ -27,7 +35,7 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
     }
 
     useEffect(()=>{
-        setTodoData([...props.todoData])
+        !searchItems && setTodoData([...props.todoData])
         listSort.status == 1 && setTodoData([...todoData.sort((a,b) => a.status - b.status)])
         listSort.status == 2 && setTodoData([...todoData.sort((a,b) => b.status - a.status)])
 
@@ -38,10 +46,10 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
         listSort.deadLine == 2 && setTodoData([...todoData.sort((a,b) => b.deadLine.getTime() - a.deadLine.getTime())])
     },[listSort])
 
+
     return (
         <>
-            {console.log({listSort})}
-            {console.log({todoData})}
+            {console.log(props.todoData.filter(item => item.text.includes("G")))}
             <Table bordered hover>
                 <thead>
                 <tr>
