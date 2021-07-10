@@ -12,3 +12,14 @@
     cursor: pointer;
     color: black !important;
 }
+
+.pagination-div svg:hover{
+    cursor: pointer;
+    background-color: rgba(238, 238, 238, 0.5);
+    border-radius: 50%;
+}
+
+.pagination-div #pagination-select{
+    border-bottom: 1px solid black !important;
+    outline: transparent;
+}

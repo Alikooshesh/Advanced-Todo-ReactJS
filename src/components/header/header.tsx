@@ -3,7 +3,7 @@ import {MdPlaylistAddCheck , MdSearch , MdFilterList , MdModeEdit} from "react-i
 import {Button, FormControl, InputGroup, Modal} from "react-bootstrap";
 
 import './header.css'
-import TaskModal from "../tastController/taskController";
+import AddTaskModal from "../addTaskModal/addTaskModal";
 import {Iheader} from "../../interfaces";
 
 const Header:React.FC<Iheader> = (props) => {
@@ -30,7 +30,7 @@ const Header:React.FC<Iheader> = (props) => {
                 <MdModeEdit className={"icon rounded-circle p-2 mx-2"} onClick={handleShow}></MdModeEdit>
             </div>
 
-            <TaskModal modalShow={props.modalShow} setModalShow={props.setModalShow} modalType={"add"} taskDate={null}></TaskModal>
+            <AddTaskModal modalShow={props.modalShow} setModalShow={props.setModalShow} setTodoData={props.setTodoData} todoData={props.todoData}></AddTaskModal>
         </header>
 
     )

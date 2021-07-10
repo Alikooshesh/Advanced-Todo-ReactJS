@@ -2,17 +2,37 @@ export interface Iheader{
     modalShow : boolean,
     setModalShow : Function,
     setSearchText: Function,
-    searchText : string
+    searchText : string,
+    todoData : Itodo[],
+    setTodoData : Function
 }
 
-export interface ItaskModal{
+export interface IaddTaskModal{
     modalShow : boolean,
     setModalShow : Function,
-    modalType : string,
-    taskDate : number | null
+    todoData : Itodo[],
+    setTodoData : Function
+}
+
+export interface IeditTaskModal{
+    editModalShow : boolean,
+    setEditModalShow : Function,
+    todoData : Itodo[],
+    setTodoData : Function,
+    todoId : number
+}
+
+export interface IremoveTaskModal{
+    removeModalShow : boolean,
+    setRemoveModalShow : Function,
+    todoData : Itodo[],
+    setTodoData : Function,
+    todoId : number,
+    setTodoID : Function
 }
 
 export interface Itodo{
+    id : number,
     text : string,
     priority : number,
     status : number,
@@ -21,7 +41,10 @@ export interface Itodo{
 
 export interface ItodoTable{
     todoData : Itodo[] ,
-    searchText : string
+    setTodoData : Function,
+    searchText : string,
+    editModalShow : boolean,
+    setEditModalShow : Function,
 }
 
 export interface IlistSort{

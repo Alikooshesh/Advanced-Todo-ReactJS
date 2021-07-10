@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {MdKeyboardArrowLeft , MdKeyboardArrowUp , MdKeyboardArrowDown , MdVisibility , MdModeEdit , MdDelete} from "react-icons/md";
+import {MdKeyboardArrowLeft , MdKeyboardArrowRight , MdKeyboardArrowUp , MdKeyboardArrowDown , MdVisibility , MdModeEdit , MdDelete} from "react-icons/md";
 import './todoTable.css'
 import {IlistSort, Itodo, ItodoTable} from "../../interfaces";
-import {Table} from "react-bootstrap";
+import {Form, Table} from "react-bootstrap";
+import RemoveTaskModal from "../removeTaskModal/removeTaskModal";
 
 const TodoTable:React.FC<ItodoTable> = (props) => {
     const [todoData , setTodoData] = useState([...props.todoData])
     const [listSort , setListSort] = useState<IlistSort>({priority : 0 , status : 0 , deadLine : 0})
+    const [editTodoId , setEditTodoID] = useState<number>(0)
+
+    const [removeModalShow , setRemoveModalShow] = useState<boolean>(false)
+    const [removeTodoId , setRemoveTodoID] = useState<number>(0)
 
     const searchItems:Itodo[] | null = props.todoData.filter(item => item.text.toLowerCase().includes(props.searchText.toLowerCase()))
 
@@ -46,6 +51,19 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
         listSort.deadLine == 2 && setTodoData([...todoData.sort((a,b) => b.deadLine.getTime() - a.deadLine.getTime())])
     },[listSort])
 
+    useEffect(()=> {
+        setTodoData([...props.todoData])
+    },[props.todoData])
+
+    function editTodo(id:number) {
+        setEditTodoID(id)
+        props.setEditModalShow(true)
+    }
+
+    function removeTodo(id:number) {
+        setRemoveTodoID(id)
+        setRemoveModalShow(true)
+    }
 
     return (
         <>
@@ -100,8 +118,8 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
                             <td className={"text-center border-0"}><div className={"d-flex justify-content-center"}>
                                 <div className={"w-50 d-flex justify-content-around"}>
                                     <span className={"clickable text-secondary"}><MdVisibility></MdVisibility></span>
-                                    <span className={"clickable text-secondary"}><MdModeEdit></MdModeEdit></span>
-                                    <span className={"clickable text-secondary"}><MdDelete></MdDelete></span>
+                                    <span className={"clickable text-secondary"} onClick={()=> editTodo(item.id)}><MdModeEdit></MdModeEdit></span>
+                                    <span className={"clickable text-secondary"} onClick={() => removeTodo(item.id)}><MdDelete></MdDelete></span>
                                 </div>
                             </div></td>
                         </tr>
@@ -110,6 +128,21 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
 
                 </tbody>
             </Table>
+            <div className={"w-100 d-flex justify-content-end"}>
+                <div className={"pagination-div w-25 d-flex justify-content-around align-items-center"}>
+                    <label htmlFor={"pagination-select"}>Rows per page :</label>
+                    <Form.Control as="select" id={"pagination-select"} className={"border-0 border-bottom-3"} custom>
+                        <option>All</option>
+                        <option>5</option>
+                        <option>10</option>
+                    </Form.Control>
+                    <text>1-5 of 10</text>
+                    <MdKeyboardArrowLeft className={"display-6"}></MdKeyboardArrowLeft>
+                    <MdKeyboardArrowRight className={"display-6"}></MdKeyboardArrowRight>
+                </div>
+            </div>
+
+            <RemoveTaskModal removeModalShow={removeModalShow} setRemoveModalShow={setRemoveModalShow} todoData={props.todoData} setTodoData={props.setTodoData} todoId={removeTodoId} setTodoID={setRemoveTodoID}></RemoveTaskModal>
         </>
     )
 }
