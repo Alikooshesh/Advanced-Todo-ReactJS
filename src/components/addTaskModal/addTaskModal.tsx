@@ -12,8 +12,9 @@ const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
 
     const [todoText , setTodoText] = useState<string>("")
     const [date, setDate] = useState<number | null>()
+    const [todoInfo,setTodoInfo] = useState<string>("")
 
-    let newTodo:Itodo = {id:0 , text:"" , status:0 , priority:0 ,deadLine:new Date()}
+    let newTodo:Itodo = {id:0 , text:"" , status:0 , priority:0 ,deadLine:new Date() , infoText:""}
 
     function priorityChange(e:React.ChangeEvent<HTMLSelectElement>) {
         newTodo.priority = Number(e.target.value)
@@ -27,9 +28,13 @@ const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
         setTodoText(e.target.value)
     }
 
+    function todoInfoTextChange(e:React.ChangeEvent<HTMLTextAreaElement>) {
+        setTodoInfo(e.target.value)
+    }
+
     function handleAdd() {
-        todoText != "" && props.setTodoData([...props.todoData , {id : Date.now() , text:todoText , status : newTodo.status , priority:newTodo.priority ,deadLine:new Date()}])
-        console.log(props.todoData)
+        todoText != "" && props.setTodoData([...props.todoData , {id : Date.now() , text:todoText , status : newTodo.status , priority:newTodo.priority ,deadLine:new Date() , infoText : ""}])
+        setTodoText("")
         handleClose()
     }
 
@@ -67,7 +72,7 @@ const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
                         />
 
                     </div>
-                    <textarea placeholder={"Task Details"} className={"w-100 rounded p-2"}></textarea>
+                    <textarea placeholder={"Task Details"} className={"w-100 rounded p-2"} value={todoInfo} onChange={todoInfoTextChange}></textarea>
 
                 </div>
 

@@ -36,7 +36,8 @@ export interface Itodo{
     text : string,
     priority : number,
     status : number,
-    deadLine : Date
+    deadLine : Date,
+    infoText : string
 }
 
 export interface ItodoTable{
