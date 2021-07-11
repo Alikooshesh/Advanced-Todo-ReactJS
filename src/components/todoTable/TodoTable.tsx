@@ -7,6 +7,7 @@ import RemoveTaskModal from "../removeTaskModal/removeTaskModal";
 import TodoTrInsideTable from "../todoTrInsideTable/todoTrInsideTable";
 import {log} from "util";
 import ViewTaskModal from "../viewTaskModal/viewTaskModal";
+import EditTaskModal from "../editTaskModal/editTaskModal";
 
 const TodoTable:React.FC<ItodoTable> = (props) => {
     const [todoData , setTodoData] = useState([...props.todoData])
@@ -146,6 +147,7 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
 
             <RemoveTaskModal removeModalShow={removeModalShow} setRemoveModalShow={setRemoveModalShow} todoData={props.todoData} setTodoData={props.setTodoData} todoId={removeTodoId} setTodoID={setRemoveTodoID}></RemoveTaskModal>
             <ViewTaskModal ViewModalShow={viewModalShow} setViewModalShow={setViewModalShow} todoId={viewTodoId} todoData={props.todoData}></ViewTaskModal>
+            <EditTaskModal editModalShow={props.editModalShow} setEditModalShow={props.setEditModalShow} todoData={props.todoData} setTodoData={props.setTodoData} todoId={editTodoId}></EditTaskModal>
         </>
     )
 }

@@ -41,6 +41,7 @@ function App() {
 
     useEffect(()=> {
         setDataFilter({priority:3, status:3, deadLine:3})
+        setTempData(todoData)
     },[todoData])
 
   return (

@@ -43,7 +43,7 @@ const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
     },[dtPicker])
 
     function handleAdd() {
-        todoText != "" && props.setTodoData([...props.todoData , {id : Date.now() , text:todoText , status : newTodo.status , priority:newTodo.priority ,deadLine:newTodo.deadLine , infoText : ""}])
+        todoText != "" && props.setTodoData([...props.todoData , {id : Date.now() , text:todoText , status : newTodo.status , priority:newTodo.priority ,deadLine:newTodo.deadLine , infoText : todoInfo}])
         setTodoText("")
         setTodoInfo("")
         handleClose()
@@ -60,14 +60,14 @@ const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
                     <div className={"w-100 d-flex justify-content-between mt-3 mb-5"}>
 
                         <Form.Control as="select" custom onChange={priorityChange}>
-                            <option disabled={true} selected={true}>priority</option>
+                            <option disabled={true} selected={true} hidden={true}>priority</option>
                             <option value={2}>High</option>
                             <option value={1}>Medium</option>
                             <option value={0}>Low</option>
                         </Form.Control>
 
                         <Form.Control as="select" custom onChange={statusChange}>
-                            <option disabled={true} selected={true}>status</option>
+                            <option disabled={true} selected={true} hidden={true}>status</option>
                             <option value={0}>ToDO</option>
                             <option value={1}>Doing</option>
                             <option value={2}>Done</option>
