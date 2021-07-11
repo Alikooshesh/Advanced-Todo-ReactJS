@@ -4,7 +4,8 @@ export interface Iheader{
     setSearchText: Function,
     searchText : string,
     todoData : Itodo[],
-    setTodoData : Function
+    setTodoData : Function,
+    setSideBarShow : Function
 }
 
 export interface IaddTaskModal{
@@ -71,4 +72,17 @@ export interface IlistSort{
     priority : number,
     status : number,
     deadLine : number
+}
+
+export interface IdataFilter{
+    priority : number,
+    status : number,
+    deadLine : number
+}
+
+export interface IsideBar{
+    sideBarShow : boolean,
+    setSideBarShow : Function,
+    dataFilter : IdataFilter,
+    setDataFilter : Function
 }

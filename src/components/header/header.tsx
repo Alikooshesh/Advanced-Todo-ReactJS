@@ -9,6 +9,7 @@ import {Iheader} from "../../interfaces";
 const Header:React.FC<Iheader> = (props) => {
     const handleClose = () => props.setModalShow(false);
     const handleShow = () => props.setModalShow(true);
+    const sideBarShow = () => props.setSideBarShow(true)
 
     function searchBarChange(e:React.ChangeEvent<HTMLInputElement>) {
         const val = e.target.value
@@ -26,7 +27,7 @@ const Header:React.FC<Iheader> = (props) => {
                     <input type={"text"} placeholder={"Search"} value={props.searchText} onChange={searchBarChange}/>
                     <MdSearch></MdSearch>
                 </div>
-                <MdFilterList className={"icon rounded-circle p-2 mx-2"}></MdFilterList>
+                <MdFilterList className={"icon rounded-circle p-2 mx-2"} onClick={sideBarShow}></MdFilterList>
                 <MdModeEdit className={"icon rounded-circle p-2 mx-2"} onClick={handleShow}></MdModeEdit>
             </div>
 
