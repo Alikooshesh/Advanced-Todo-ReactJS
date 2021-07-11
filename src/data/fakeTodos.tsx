@@ -22,7 +22,7 @@ const fakeTodos : Itodo[] = [
         text : "Do the dishes",
         priority : 2,
         status : 0,
-        deadLine : new Date(1425581987368),
+        deadLine : new Date(1626291000000),
         infoText : "test info"
     },
     {

@@ -1,6 +1,7 @@
 import {MdDelete, MdModeEdit, MdVisibility} from "react-icons/md";
 import React from "react";
 import {ItodoTr} from "../../interfaces";
+import moment from "jalali-moment";
 
 const TodoTrInsideTable:React.FC<ItodoTr> = (props) => {
     return(
@@ -26,9 +27,10 @@ const TodoTrInsideTable:React.FC<ItodoTr> = (props) => {
 
             <td className={"text-center border-0"}>
                 <span>
-                    {props.deadLine <= new Date(Date.now()+(1000*60*60*24)) ?
-                        <span className={"deadLine-td p-1 pr-2 px-2 border-danger text-danger"}>{`${props.deadLine.getFullYear()}/${props.deadLine.getMonth()+1}/${props.deadLine.getDate()}`}</span> :
-                        <span className={"deadLine-td p-1 pr-2 px-2 border-success text-ssuccess"}>{`${props.deadLine.getFullYear()}/${props.deadLine.getMonth()+1}/${props.deadLine.getDate()}`}</span>}
+                    {props.deadLine <= new Date(Date.now()) ?
+                        <span className={"deadLine-td p-1 pr-2 px-2 border-danger text-danger"}>{moment(`${props.deadLine.getFullYear()}/${props.deadLine.getMonth()+1}/${props.deadLine.getDate()}`, 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD')}</span> :
+                        <span className={"deadLine-td p-1 pr-2 px-2 border-success text-ssuccess"}>{moment(`${props.deadLine.getFullYear()}/${props.deadLine.getMonth()+1}/${props.deadLine.getDate()}`, 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD')}</span>}
+                    {console.log(props.deadLine)}
                 </span>
             </td>
 

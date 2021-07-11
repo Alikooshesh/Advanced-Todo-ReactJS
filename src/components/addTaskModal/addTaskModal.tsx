@@ -1,20 +1,23 @@
 import './addTaskModal.css'
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Form, Modal} from "react-bootstrap";
 import DtPicker from 'react-calendar-datetime-picker'
 import 'react-calendar-datetime-picker/dist/index.css'
 
 import {IaddTaskModal, Itodo} from "../../interfaces";
+import moment from "jalali-moment";
+import {log} from "util";
 
 const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
     const handleClose = () => props.setModalShow(false);
     const handleShow = () => props.setModalShow(true);
 
     const [todoText , setTodoText] = useState<string>("")
-    const [date, setDate] = useState<number | null>()
+    const [dtPicker, setDtPicker] = useState<any>()
+    const [enDate,setEnDate] = useState<Date>(new Date())
     const [todoInfo,setTodoInfo] = useState<string>("")
 
-    let newTodo:Itodo = {id:0 , text:"" , status:0 , priority:0 ,deadLine:new Date() , infoText:""}
+    let newTodo:Itodo = {id:0 , text:"" , status:0 , priority:0 ,deadLine:enDate , infoText:""}
 
     function priorityChange(e:React.ChangeEvent<HTMLSelectElement>) {
         newTodo.priority = Number(e.target.value)
@@ -33,13 +36,24 @@ const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
     }
 
     function handleAdd() {
-        todoText != "" && props.setTodoData([...props.todoData , {id : Date.now() , text:todoText , status : newTodo.status , priority:newTodo.priority ,deadLine:new Date() , infoText : ""}])
+        todoText != "" && props.setTodoData([...props.todoData , {id : Date.now() , text:todoText , status : newTodo.status , priority:newTodo.priority ,deadLine:newTodo.deadLine , infoText : ""}])
+        console.log(props.todoData)
         setTodoText("")
         handleClose()
     }
 
+    useEffect(()=>{
+        let stringDate : string = "0"
+        if (dtPicker){
+            stringDate = moment.from(`${dtPicker.year}/${dtPicker.month}/${dtPicker.day}`, 'fa', 'YYYY/MM/DD').format('YYYY/MM/DD')
+            setEnDate(new Date(new Date(stringDate).getTime()))
+            console.log(newTodo.deadLine.getTime())
+        }
+    },[dtPicker])
+
     return (
         <Modal show={props.modalShow} onHide={handleClose}>
+            {console.log(props.todoData)}
             <Modal.Header>
                 <Modal.Title>New Task</Modal.Title>
             </Modal.Header>
@@ -63,7 +77,7 @@ const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
                         </Form.Control>
 
                         <DtPicker
-                            onChange={setDate}
+                            onChange={setDtPicker}
                             showWeekend
                             clearBtn
                             local="fa"
