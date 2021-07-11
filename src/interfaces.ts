@@ -47,6 +47,17 @@ export interface ItodoTable{
     setEditModalShow : Function,
 }
 
+export interface ItodoTr{
+    index : number,
+    text : string,
+    priority : number,
+    status : number,
+    deadLine : Date,
+    id : number,
+    editTodo : Function,
+    removeTodo : Function
+}
+
 export interface IlistSort{
     priority : number,
     status : number,

@@ -4,6 +4,8 @@ import './todoTable.css'
 import {IlistSort, Itodo, ItodoTable} from "../../interfaces";
 import {Form, Table} from "react-bootstrap";
 import RemoveTaskModal from "../removeTaskModal/removeTaskModal";
+import TodoTrInsideTable from "../todoTrInsideTable/todoTrInsideTable";
+import {log} from "util";
 
 const TodoTable:React.FC<ItodoTable> = (props) => {
     const [todoData , setTodoData] = useState([...props.todoData])
@@ -13,10 +15,13 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
     const [removeModalShow , setRemoveModalShow] = useState<boolean>(false)
     const [removeTodoId , setRemoveTodoID] = useState<number>(0)
 
+    const [paginationValue , setPaginationValue] = useState<number>(0)
+    const [pageCounts , setPageCounts] = useState<number>(1)
+    const [pageNumber , setPageNumber] = useState<number>(1)
+
     const searchItems:Itodo[] | null = props.todoData.filter(item => item.text.toLowerCase().includes(props.searchText.toLowerCase()))
 
     useEffect(()=> {
-        // const searchItems:Itodo[] | null = props.todoData.filter(item => item.text.includes(props.searchText))
         searchItems ? setTodoData([...searchItems]) : setTodoData([...todoData])
         setListSort({priority : 0 , status : 0 , deadLine : 0})
     },[props.searchText])
@@ -65,9 +70,22 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
         setRemoveModalShow(true)
     }
 
+    function paginationChange(e:React.ChangeEvent<HTMLSelectElement>) {
+        console.log(parseFloat(e.target.value))
+        setPaginationValue(parseFloat(e.target.value))
+
+    }
+
+    useEffect(()=> {
+        paginationValue!= 0 ? setPageCounts(todoData.length / paginationValue) : setPageCounts(1)
+        setTodoData([...todoData])
+    },[paginationValue])
+
+    const pageNumberUp = () => {pageNumber*paginationValue < todoData.length && setPageNumber(pageNumber + 1)}
+    const pageNumberDown = () => {pageNumber > 1 && setPageNumber(pageNumber - 1)}
+
     return (
         <>
-            {console.log(props.todoData.filter(item => item.text.includes("G")))}
             <Table bordered hover>
                 <thead>
                 <tr>
@@ -91,39 +109,17 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
                 </tr>
                 </thead>
                 <tbody>
-                {todoData.map(item => {
-                    return(
-                        <tr>
-                            <td>{item.text}</td>
-                            <td className={"text-center border-0"}><span>
-                                {item.priority == 0 && <span className={"status-td p-1 pr-2 px-2 bg-dark text-light"}>Low</span>}
-                                {item.priority == 1 && <span className={"status-td p-1 pr-2 px-2 bg-warning text-light"}>Medium</span>}
-                                {item.priority == 2 && <span className={"status-td p-1 pr-2 px-2 bg-danger text-light"}>High</span>}
-                            </span></td>
+                {todoData.map((item,index) => {
+                    if (paginationValue != 0){
+                        if ((pageNumber*paginationValue)-paginationValue <= index && index < pageNumber*paginationValue){
+                            {console.log("pagination used")}
+                            return <TodoTrInsideTable index={index} id={item.id} text={item.text} priority={item.priority} status={item.status} deadLine={item.deadLine} editTodo={editTodo} removeTodo={removeTodo}></TodoTrInsideTable>
+                        }
+                    }else {
+                        {console.log("pagination All")}
+                        return <TodoTrInsideTable index={index} id={item.id} text={item.text} priority={item.priority} status={item.status} deadLine={item.deadLine} editTodo={editTodo} removeTodo={removeTodo}></TodoTrInsideTable>
+                    }
 
-
-                            <td className={"text-center border-0"}><span>
-                                {item.status == 0 && <span className={"status-td p-1 pr-2 px-2 bg-warning text-light"}>To Do</span>}
-                                {item.status == 1 && <span className={"status-td p-1 pr-2 px-2 bg-primary text-light"}>Doing</span>}
-                                {item.status == 2 && <span className={"status-td p-1 pr-2 px-2 bg-success text-light"}>Done</span>}
-                            </span></td>
-
-
-                            <td className={"text-center border-0"}><span>
-                                {item.deadLine <= new Date(Date.now()+(1000*60*60*24)) ?
-                                    <span className={"deadLine-td p-1 pr-2 px-2 border-danger text-danger"}>{`${item.deadLine.getFullYear()}/${item.deadLine.getMonth()+1}/${item.deadLine.getDate()}`}</span> :
-                                    <span className={"deadLine-td p-1 pr-2 px-2 border-success text-ssuccess"}>{`${item.deadLine.getFullYear()}/${item.deadLine.getMonth()+1}/${item.deadLine.getDate()}`}</span>}
-                            </span></td>
-
-                            <td className={"text-center border-0"}><div className={"d-flex justify-content-center"}>
-                                <div className={"w-50 d-flex justify-content-around"}>
-                                    <span className={"clickable text-secondary"}><MdVisibility></MdVisibility></span>
-                                    <span className={"clickable text-secondary"} onClick={()=> editTodo(item.id)}><MdModeEdit></MdModeEdit></span>
-                                    <span className={"clickable text-secondary"} onClick={() => removeTodo(item.id)}><MdDelete></MdDelete></span>
-                                </div>
-                            </div></td>
-                        </tr>
-                    )
                 })}
 
                 </tbody>
@@ -131,14 +127,14 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
             <div className={"w-100 d-flex justify-content-end"}>
                 <div className={"pagination-div w-25 d-flex justify-content-around align-items-center"}>
                     <label htmlFor={"pagination-select"}>Rows per page :</label>
-                    <Form.Control as="select" id={"pagination-select"} className={"border-0 border-bottom-3"} custom>
-                        <option>All</option>
-                        <option>5</option>
-                        <option>10</option>
+                    <Form.Control as="select" id={"pagination-select"} className={"border-0 border-bottom-3"} custom onChange={paginationChange}>
+                        <option value={0}>All</option>
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
                     </Form.Control>
-                    <text>1-5 of 10</text>
-                    <MdKeyboardArrowLeft className={"display-6"}></MdKeyboardArrowLeft>
-                    <MdKeyboardArrowRight className={"display-6"}></MdKeyboardArrowRight>
+                    {paginationValue != 0 && <text>{(pageNumber*paginationValue)-paginationValue+1}-{pageNumber*paginationValue} / page : {pageNumber}</text>}
+                    <MdKeyboardArrowLeft className={"display-6"} onClick={pageNumberDown}></MdKeyboardArrowLeft>
+                    <MdKeyboardArrowRight className={"display-6"} onClick={pageNumberUp}></MdKeyboardArrowRight>
                 </div>
             </div>
 

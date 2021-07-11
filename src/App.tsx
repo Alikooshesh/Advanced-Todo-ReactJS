@@ -21,7 +21,8 @@ function App() {
         <Header setModalShow={setAddModalShow} modalShow={addModalShow} searchText={searchText} setSearchText={setSearchText} setTodoData={setTodoData} todoData={todoData}></Header>
       </div>
         <TodoTable todoData={todoData} setTodoData={setTodoData} searchText={searchText} editModalShow={editModalShow} setEditModalShow={setEditModalShow}></TodoTable>
-
+        <table>
+        </table>
     </div>
   );
 }
