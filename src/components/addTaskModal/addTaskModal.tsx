@@ -10,7 +10,6 @@ import {log} from "util";
 
 const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
     const handleClose = () => props.setModalShow(false);
-    const handleShow = () => props.setModalShow(true);
 
     const [todoText , setTodoText] = useState<string>("")
     const [dtPicker, setDtPicker] = useState<any>()
@@ -35,25 +34,23 @@ const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
         setTodoInfo(e.target.value)
     }
 
-    function handleAdd() {
-        todoText != "" && props.setTodoData([...props.todoData , {id : Date.now() , text:todoText , status : newTodo.status , priority:newTodo.priority ,deadLine:newTodo.deadLine , infoText : ""}])
-        console.log(props.todoData)
-        setTodoText("")
-        handleClose()
-    }
-
     useEffect(()=>{
         let stringDate : string = "0"
         if (dtPicker){
             stringDate = moment.from(`${dtPicker.year}/${dtPicker.month}/${dtPicker.day}`, 'fa', 'YYYY/MM/DD').format('YYYY/MM/DD')
             setEnDate(new Date(new Date(stringDate).getTime()))
-            console.log(newTodo.deadLine.getTime())
         }
     },[dtPicker])
 
+    function handleAdd() {
+        todoText != "" && props.setTodoData([...props.todoData , {id : Date.now() , text:todoText , status : newTodo.status , priority:newTodo.priority ,deadLine:newTodo.deadLine , infoText : ""}])
+        setTodoText("")
+        setTodoInfo("")
+        handleClose()
+    }
+
     return (
         <Modal show={props.modalShow} onHide={handleClose}>
-            {console.log(props.todoData)}
             <Modal.Header>
                 <Modal.Title>New Task</Modal.Title>
             </Modal.Header>

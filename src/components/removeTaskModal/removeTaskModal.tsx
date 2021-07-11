@@ -19,7 +19,7 @@ const RemoveTaskModal:React.FC<IremoveTaskModal> = (props) => {
             <Modal.Header>
             </Modal.Header>
             <Modal.Body >
-                <h1>Are You Sure you want to delete task ?</h1>
+                <h4 className={"text-center"}>Are You Sure you want to delete task ?</h4>
             </Modal.Body>
             <Modal.Footer>
                 <div className={"w-100 d-flex align-items-center"}>

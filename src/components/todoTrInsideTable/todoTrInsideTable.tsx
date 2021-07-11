@@ -30,13 +30,12 @@ const TodoTrInsideTable:React.FC<ItodoTr> = (props) => {
                     {props.deadLine <= new Date(Date.now()) ?
                         <span className={"deadLine-td p-1 pr-2 px-2 border-danger text-danger"}>{moment(`${props.deadLine.getFullYear()}/${props.deadLine.getMonth()+1}/${props.deadLine.getDate()}`, 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD')}</span> :
                         <span className={"deadLine-td p-1 pr-2 px-2 border-success text-ssuccess"}>{moment(`${props.deadLine.getFullYear()}/${props.deadLine.getMonth()+1}/${props.deadLine.getDate()}`, 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD')}</span>}
-                    {console.log(props.deadLine)}
                 </span>
             </td>
 
             <td className={"text-center border-0"}><div className={"d-flex justify-content-center"}>
                 <div className={"w-50 d-flex justify-content-around"}>
-                    <span className={"clickable text-secondary"}><MdVisibility></MdVisibility></span>
+                    <span className={"clickable text-secondary"} onClick={()=> props.viewTodo(props.id)}><MdVisibility></MdVisibility></span>
                     <span className={"clickable text-secondary"} onClick={()=> props.editTodo(props.id)}><MdModeEdit></MdModeEdit></span>
                     <span className={"clickable text-secondary"} onClick={() => props.removeTodo(props.id)}><MdDelete></MdDelete></span>
                 </div>

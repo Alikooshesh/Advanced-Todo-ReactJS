@@ -6,6 +6,7 @@ import {Form, Table} from "react-bootstrap";
 import RemoveTaskModal from "../removeTaskModal/removeTaskModal";
 import TodoTrInsideTable from "../todoTrInsideTable/todoTrInsideTable";
 import {log} from "util";
+import ViewTaskModal from "../viewTaskModal/viewTaskModal";
 
 const TodoTable:React.FC<ItodoTable> = (props) => {
     const [todoData , setTodoData] = useState([...props.todoData])
@@ -14,6 +15,9 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
 
     const [removeModalShow , setRemoveModalShow] = useState<boolean>(false)
     const [removeTodoId , setRemoveTodoID] = useState<number>(0)
+
+    const [viewModalShow , setViewModalShow] = useState<boolean>(false)
+    const [viewTodoId , setViewTodoID] = useState<number>(0)
 
     const [paginationValue , setPaginationValue] = useState<number>(0)
     const [pageCounts , setPageCounts] = useState<number>(1)
@@ -70,8 +74,12 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
         setRemoveModalShow(true)
     }
 
+    function viewTodo(id:number) {
+        setViewTodoID(id)
+        setViewModalShow(true)
+    }
+
     function paginationChange(e:React.ChangeEvent<HTMLSelectElement>) {
-        console.log(parseFloat(e.target.value))
         setPaginationValue(parseFloat(e.target.value))
 
     }
@@ -112,12 +120,10 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
                 {todoData.map((item,index) => {
                     if (paginationValue != 0){
                         if ((pageNumber*paginationValue)-paginationValue <= index && index < pageNumber*paginationValue){
-                            {console.log("pagination used")}
-                            return <TodoTrInsideTable index={index} id={item.id} text={item.text} priority={item.priority} status={item.status} deadLine={item.deadLine} editTodo={editTodo} removeTodo={removeTodo}></TodoTrInsideTable>
+                            return <TodoTrInsideTable key={index} index={index} id={item.id} text={item.text} priority={item.priority} status={item.status} deadLine={item.deadLine} editTodo={editTodo} removeTodo={removeTodo} viewTodo={viewTodo}></TodoTrInsideTable>
                         }
                     }else {
-                        {console.log("pagination All")}
-                        return <TodoTrInsideTable index={index} id={item.id} text={item.text} priority={item.priority} status={item.status} deadLine={item.deadLine} editTodo={editTodo} removeTodo={removeTodo}></TodoTrInsideTable>
+                        return <TodoTrInsideTable key={index} index={index} id={item.id} text={item.text} priority={item.priority} status={item.status} deadLine={item.deadLine} editTodo={editTodo} removeTodo={removeTodo} viewTodo={viewTodo}></TodoTrInsideTable>
                     }
 
                 })}
@@ -132,13 +138,14 @@ const TodoTable:React.FC<ItodoTable> = (props) => {
                         <option value={5}>5</option>
                         <option value={10}>10</option>
                     </Form.Control>
-                    {paginationValue != 0 && <text>{(pageNumber*paginationValue)-paginationValue+1}-{pageNumber*paginationValue} / page : {pageNumber}</text>}
-                    <MdKeyboardArrowLeft className={"display-6"} onClick={pageNumberDown}></MdKeyboardArrowLeft>
-                    <MdKeyboardArrowRight className={"display-6"} onClick={pageNumberUp}></MdKeyboardArrowRight>
+                    {paginationValue != 0 && <span>{(pageNumber*paginationValue)-paginationValue+1}-{pageNumber*paginationValue} / page : {pageNumber}</span>}
+                    {paginationValue != 0 && (pageNumber <= 1 ? <MdKeyboardArrowLeft className={"display-6 text-black-50"}></MdKeyboardArrowLeft> : <MdKeyboardArrowLeft className={"display-6"} onClick={pageNumberDown}></MdKeyboardArrowLeft>)}
+                    {paginationValue != 0 && (pageNumber*paginationValue >= todoData.length ? <MdKeyboardArrowRight className={"display-6 text-black-50"}></MdKeyboardArrowRight> : <MdKeyboardArrowRight className={"display-6"} onClick={pageNumberUp}></MdKeyboardArrowRight>)}
                 </div>
             </div>
 
             <RemoveTaskModal removeModalShow={removeModalShow} setRemoveModalShow={setRemoveModalShow} todoData={props.todoData} setTodoData={props.setTodoData} todoId={removeTodoId} setTodoID={setRemoveTodoID}></RemoveTaskModal>
+            <ViewTaskModal ViewModalShow={viewModalShow} setViewModalShow={setViewModalShow} todoId={viewTodoId} todoData={props.todoData}></ViewTaskModal>
         </>
     )
 }

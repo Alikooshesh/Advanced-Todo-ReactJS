@@ -31,6 +31,13 @@ export interface IremoveTaskModal{
     setTodoID : Function
 }
 
+export interface IviewTaskModal{
+    ViewModalShow : boolean,
+    setViewModalShow : Function,
+    todoId : number,
+    todoData : Itodo[]
+}
+
 export interface Itodo{
     id : number,
     text : string,
@@ -56,7 +63,8 @@ export interface ItodoTr{
     deadLine : Date,
     id : number,
     editTodo : Function,
-    removeTodo : Function
+    removeTodo : Function,
+    viewTodo : Function
 }
 
 export interface IlistSort{
