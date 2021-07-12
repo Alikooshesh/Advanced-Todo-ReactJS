@@ -16,14 +16,16 @@ const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
     const [enDate,setEnDate] = useState<Date>(new Date())
     const [todoInfo,setTodoInfo] = useState<string>("")
 
-    let newTodo:Itodo = {id:0 , text:"" , status:0 , priority:0 ,deadLine:enDate , infoText:""}
+    const [newTodo,setNewTodo] = useState<Itodo>({id:0 , text:"" , status:0 , priority:0 ,deadLine:enDate , infoText:""})
 
     function priorityChange(e:React.ChangeEvent<HTMLSelectElement>) {
         newTodo.priority = Number(e.target.value)
+        setNewTodo({id:newTodo.id , text:newTodo.text , status:newTodo.status , priority:Number(e.target.value) ,deadLine:enDate , infoText:newTodo.infoText})
     }
 
     function statusChange(e:React.ChangeEvent<HTMLSelectElement>) {
         newTodo.status = Number(e.target.value)
+        setNewTodo({id:newTodo.id , text:newTodo.text , status:Number(e.target.value) , priority:newTodo.priority ,deadLine:enDate , infoText:newTodo.infoText})
     }
 
     function todoTextChange(e:React.ChangeEvent<HTMLInputElement>) {
@@ -43,7 +45,7 @@ const AddTaskModal:React.FC<IaddTaskModal> = (props) => {
     },[dtPicker])
 
     function handleAdd() {
-        todoText != "" && props.setTodoData([...props.todoData , {id : Date.now() , text:todoText , status : newTodo.status , priority:newTodo.priority ,deadLine:newTodo.deadLine , infoText : todoInfo}])
+        todoText != "" && props.setTodoData([...props.todoData , {id : Date.now() , text:todoText , status : newTodo.status , priority:newTodo.priority ,deadLine:enDate , infoText : todoInfo}])
         setTodoText("")
         setTodoInfo("")
         handleClose()

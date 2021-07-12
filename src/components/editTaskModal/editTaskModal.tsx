@@ -66,17 +66,20 @@ const EditTaskModal:React.FC<IeditTaskModal> = (props) => {
     }
 
     useEffect(()=>{
-        props.todoId && setTodoTaked(props.todoData.filter(item => item.id == props.todoId)[0])
-        props.todoId && setTodoText(props.todoData.filter(item => item.id == props.todoId)[0].text)
-        props.todoId && setTodoInfo(props.todoData.filter(item => item.id == props.todoId)[0].infoText)
+        if (props.todoId){
+            props.todoId && setTodoTaked(props.todoData.filter(item => item.id == props.todoId)[0])
+            props.todoId && setTodoText(props.todoData.filter(item => item.id == props.todoId)[0].text)
+            props.todoId && setTodoInfo(props.todoData.filter(item => item.id == props.todoId)[0].infoText)
 
-        let tempTaked:any
-        props.todoId ? tempTaked = props.todoData.filter(item => item.id == props.todoId)[0] : tempTaked = ""
+            let tempTaked:any
+            props.todoId ? tempTaked = props.todoData.filter(item => item.id == props.todoId)[0] : tempTaked = ""
 
-        let date : any
-        date= moment(`${tempTaked.deadLine.getFullYear()}/${tempTaked.deadLine.getMonth()+1}/${tempTaked.deadLine.getDate()}`, 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD').split("/")
-        date = {year: date[0], month: date[1], day: date[2]}
-        setTodoTakedDate(date)
+            let date : any
+            date= moment(`${tempTaked.deadLine.getFullYear()}/${tempTaked.deadLine.getMonth()+1}/${tempTaked.deadLine.getDate()}`, 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD').split("/")
+            date = {year: date[0], month: date[1], day: date[2]}
+            setTodoTakedDate(date)
+        }
+
     },[props.todoId])
 
 
