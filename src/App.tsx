@@ -36,7 +36,9 @@ function App() {
             dataFilter.deadLine == 0 ? _tempData = [..._tempData.filter(item => new Date() > item.deadLine)] : _tempData = [..._tempData]
             dataFilter.deadLine == 1 ? _tempData = [..._tempData.filter(item => new Date() <= item.deadLine)] : _tempData = [..._tempData]
         }
+
         setTempData([..._tempData])
+
     },[dataFilter])
 
     useEffect(()=> {
