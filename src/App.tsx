@@ -19,24 +19,24 @@ function App() {
     const [sideBarShow , setSideBarShow] = useState<boolean>(false)
     const [dataFilter , setDataFilter] = useState<IdataFilter>({priority:3, status:3, deadLine:3})
 
+
     useEffect( ()=> {
         setTempData(todoData)
+        let _tempData = [...todoData]
 
         if (dataFilter.priority !=3){
-            console.log("priority")
-            setTempData([...tempData.filter(item => item.priority == dataFilter.priority)])
+            _tempData = [..._tempData.filter(item => item.priority == dataFilter.priority)]
         }
 
         if (dataFilter.status != 3){
-            console.log("status")
-            setTempData([...tempData.filter(item => item.status == dataFilter.status)])
+            _tempData = [..._tempData.filter(item => item.status == dataFilter.status)]
         }
 
         if (dataFilter.deadLine != 3){
-            console.log("deadLine")
-            dataFilter.deadLine == 0 && setTempData([...tempData.filter(item => new Date() > item.deadLine)])
-            dataFilter.deadLine == 1 && setTempData([...tempData.filter(item => new Date() <= item.deadLine)])
+            dataFilter.deadLine == 0 ? _tempData = [..._tempData.filter(item => new Date() > item.deadLine)] : _tempData = [..._tempData]
+            dataFilter.deadLine == 1 ? _tempData = [..._tempData.filter(item => new Date() <= item.deadLine)] : _tempData = [..._tempData]
         }
+        setTempData([..._tempData])
     },[dataFilter])
 
     useEffect(()=> {

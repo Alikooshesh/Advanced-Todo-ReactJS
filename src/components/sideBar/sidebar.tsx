@@ -9,19 +9,20 @@ const Sidebar:React.FC<IsideBar> = (props)=> {
     }
 
     function priorityFilter(e:React.ChangeEvent<HTMLSelectElement>){
-        props.setDataFilter({priority : e.target.value, status:props.dataFilter.status, deadLine : props.dataFilter.deadLine})
+        props.setDataFilter({priority : parseFloat(e.target.value), status:props.dataFilter.status, deadLine : props.dataFilter.deadLine})
     }
 
     function statusFilter(e:React.ChangeEvent<HTMLSelectElement>) {
-        props.setDataFilter({priority : props.dataFilter.priority, status:e.target.value, deadLine : props.dataFilter.deadLine})
+        props.setDataFilter({priority : props.dataFilter.priority, status: parseFloat(e.target.value), deadLine : props.dataFilter.deadLine})
     }
 
     function deadLineFilter(e:React.ChangeEvent<HTMLSelectElement>) {
-        props.setDataFilter({priority : props.dataFilter.priority, status:props.dataFilter.status, deadLine : e.target.value})
+        props.setDataFilter({priority : props.dataFilter.priority, status:props.dataFilter.status, deadLine : parseFloat(e.target.value)})
     }
 
     return (
         <div className={"d-flex"}>
+            {console.log(props.dataFilter)}
             <OffCanvas
                 width={300}
                 transitionDuration={300}
