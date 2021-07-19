@@ -5,7 +5,6 @@ import {IlistSort, Itodo, ItodoTable} from "../../interfaces";
 import {Form, Table} from "react-bootstrap";
 import RemoveTaskModal from "../removeTaskModal/removeTaskModal";
 import TodoTrInsideTable from "../todoTrInsideTable/todoTrInsideTable";
-import {log} from "util";
 import ViewTaskModal from "../viewTaskModal/viewTaskModal";
 import EditTaskModal from "../editTaskModal/editTaskModal";
 
